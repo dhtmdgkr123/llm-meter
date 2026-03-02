@@ -1,0 +1,25 @@
+.github/workflows/ci.yml
+  2cc00344fc5330e9 1-15
+.github/workflows/publish.yml
+  2cc00344fc5330e9 1-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.7",
+  "base_commit_sha": "d1dbc905e70ed7393a28619ce564c8a70586a21b",
+  "prompts": {
+    "2cc00344fc5330e9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a0e4eb67-e4c1-4f69-adc3-4e2dc9d37d16",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "dhtmdgkr123 <osh12201@gmail.com>",
+      "messages": [],
+      "total_additions": 38,
+      "total_deletions": 0,
+      "accepted_lines": 38,
+      "overriden_lines": 0
+    }
+  }
+}
