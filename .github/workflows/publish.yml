@@ -1,0 +1,23 @@
+name: Publish to npm
+
+on:
+  push:
+    tags: ["*.*.*"]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          registry-url: https://registry.npmjs.org
+      - run: bun install
+      - run: bun test
+      - name: Sync version from git tag
+        run: npm version "${GITHUB_REF_NAME}" --no-git-tag-version
+      - run: bun run build
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
