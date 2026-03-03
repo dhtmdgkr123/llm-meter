@@ -7,41 +7,41 @@ const fixturesDir = join(import.meta.dir, '..', 'fixtures', 'codex');
 describe('CodexProvider', () => {
   const provider = new CodexProvider([fixturesDir]);
 
-  test('parses per-event deltas using last_token_usage and deduplicates', async () => {
+  test('parses per-event using last_token_usage (matches ccusage, no dedup)', async () => {
     const records = await provider.collectRecords(
       new Date('2026-03-01T00:00:00Z'),
       new Date('2026-03-01T23:59:59Z'),
     );
 
-    // 2 turns × 2 duplicate events each → 2 records after dedup
-    expect(records.length).toBe(2);
+    // 2 turns × 2 events each = 4 records (ccusage does not deduplicate)
+    expect(records.length).toBe(4);
 
-    // Turn 1: last_token_usage = {input:500, cached:200, output:100, reasoning:50}
-    const r1 = records[0]!;
-    expect(r1.provider).toBe('codex');
-    expect(r1.model).toBe('gpt-5.3-codex');
-    expect(r1.inputTokens).toBe(300);         // 500 - 200 (non-cached)
-    expect(r1.cachedInputTokens).toBe(200);
-    expect(r1.outputTokens).toBe(100);
-    expect(r1.reasoningTokens).toBe(50);
-    // totalTokens = nonCachedInput + output + cached (consistent with Claude)
-    expect(r1.totalTokens).toBe(600);          // 300 + 100 + 200
+    // All records should have correct provider and model
+    for (const r of records) {
+      expect(r.provider).toBe('codex');
+      expect(r.model).toBe('gpt-5.3-codex');
+    }
 
-    // Turn 2: last_token_usage = {input:700, cached:600, output:200, reasoning:70}
-    const r2 = records[1]!;
-    expect(r2.inputTokens).toBe(100);          // 700 - 600 (non-cached)
-    expect(r2.cachedInputTokens).toBe(600);
-    expect(r2.outputTokens).toBe(200);
-    expect(r2.reasoningTokens).toBe(70);
-    expect(r2.totalTokens).toBe(900);          // 100 + 200 + 600
+    // Turn 1 events (pair): last_token_usage = {input:500, cached:200, output:100}
+    expect(records[0]!.inputTokens).toBe(300);    // 500 - 200
+    expect(records[0]!.outputTokens).toBe(100);
+    expect(records[0]!.cachedInputTokens).toBe(200);
+    expect(records[1]!.inputTokens).toBe(300);     // duplicate event, same values
+    expect(records[1]!.outputTokens).toBe(100);
 
-    // Sum should match final cumulative total
-    const sumInput = r1.inputTokens + r2.inputTokens;
-    const sumCached = r1.cachedInputTokens + r2.cachedInputTokens;
-    const sumOutput = r1.outputTokens + r2.outputTokens;
-    expect(sumInput).toBe(400);                // 1200 - 800
-    expect(sumCached).toBe(800);
-    expect(sumOutput).toBe(300);
+    // Turn 2 events (pair): last_token_usage = {input:700, cached:600, output:200}
+    expect(records[2]!.inputTokens).toBe(100);    // 700 - 600
+    expect(records[2]!.outputTokens).toBe(200);
+    expect(records[2]!.cachedInputTokens).toBe(600);
+    expect(records[3]!.inputTokens).toBe(100);     // duplicate event, same values
+
+    // Sum of all records (matches ccusage behavior: includes duplicates)
+    const sumInput = records.reduce((s, r) => s + r.inputTokens, 0);
+    const sumCached = records.reduce((s, r) => s + r.cachedInputTokens, 0);
+    const sumOutput = records.reduce((s, r) => s + r.outputTokens, 0);
+    expect(sumInput).toBe(800);    // (300+300+100+100)
+    expect(sumCached).toBe(1600);  // (200+200+600+600)
+    expect(sumOutput).toBe(600);   // (100+100+200+200)
   });
 
   test('returns empty for out-of-range dates', async () => {
