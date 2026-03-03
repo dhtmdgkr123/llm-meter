@@ -163,23 +163,15 @@ export class CodexProvider extends BaseProvider {
           const totalUsage = normalizeUsage(info.total_token_usage);
           const lastUsage = normalizeUsage(info.last_token_usage);
 
-          // Prefer last_token_usage as per-turn delta;
+          // Prefer last_token_usage as per-turn delta (matches ccusage);
           // fall back to diff of total_token_usage
           let delta: TokenUsageRaw | null = lastUsage;
           if (!delta && totalUsage) {
             delta = subtractUsage(totalUsage, previousTotals);
           }
 
-          // Update previous totals for next diff
+          // Update previous totals for fallback diff calculation
           if (totalUsage) {
-            // Duplicate events have same total → diff will be zero next time
-            if (
-              totalUsage.input_tokens === previousTotals.input_tokens &&
-              totalUsage.output_tokens === previousTotals.output_tokens
-            ) {
-              // Duplicate event, skip
-              continue;
-            }
             previousTotals = totalUsage;
           }
 
