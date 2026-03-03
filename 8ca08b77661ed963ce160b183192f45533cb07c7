@@ -1,0 +1,25 @@
+tests/providers/codex.test.ts
+  c8011851b5214274 10,16-17,19-23,25-30,32-44
+src/providers/codex.ts
+  c8011851b5214274 166,173
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.7",
+  "base_commit_sha": "8ca08b77661ed963ce160b183192f45533cb07c7",
+  "prompts": {
+    "c8011851b5214274": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b9d2c9ee-f937-4d82-8e2f-831a7527b579",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "dhtmdgkr123 <osh12201@gmail.com>",
+      "messages": [],
+      "total_additions": 29,
+      "total_deletions": 37,
+      "accepted_lines": 29,
+      "overriden_lines": 0
+    }
+  }
+}
