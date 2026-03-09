@@ -1,13 +1,13 @@
 import type { TokenRecord } from '../core/types.ts';
 import { getModelPricing } from './models.ts';
 
-const TIER_THRESHOLD = 200_000;
+const DEFAULT_TIER_THRESHOLD = 200_000;
 
-function tieredCost(tokens: number, basePer1M: number, tieredPer1M?: number): number {
+function tieredCost(tokens: number, basePer1M: number, threshold: number, tieredPer1M?: number): number {
   if (tokens <= 0) return 0;
-  if (tieredPer1M != null && tokens > TIER_THRESHOLD) {
-    const below = TIER_THRESHOLD;
-    const above = tokens - TIER_THRESHOLD;
+  if (tieredPer1M != null && tokens > threshold) {
+    const below = threshold;
+    const above = tokens - threshold;
     return (below / 1_000_000) * basePer1M + (above / 1_000_000) * tieredPer1M;
   }
   return (tokens / 1_000_000) * basePer1M;
@@ -15,12 +15,13 @@ function tieredCost(tokens: number, basePer1M: number, tieredPer1M?: number): nu
 
 export function calculateCost(record: TokenRecord): number {
   const pricing = getModelPricing(record.model, record.provider);
+  const threshold = pricing.tierThreshold ?? DEFAULT_TIER_THRESHOLD;
 
-  const inputCost = tieredCost(record.inputTokens, pricing.inputPer1M, pricing.inputPer1MAbove200k);
-  const outputCost = tieredCost(record.outputTokens, pricing.outputPer1M, pricing.outputPer1MAbove200k);
-  const cachedCost = (record.cachedInputTokens / 1_000_000) * pricing.cachedInputPer1M;
+  const inputCost = tieredCost(record.inputTokens, pricing.inputPer1M, threshold, pricing.inputPer1MAboveTier);
+  const outputCost = tieredCost(record.outputTokens, pricing.outputPer1M, threshold, pricing.outputPer1MAboveTier);
+  const cachedCost = tieredCost(record.cachedInputTokens, pricing.cachedInputPer1M, threshold, pricing.cachedInputPer1MAboveTier);
   const cacheCreationCost = pricing.cacheCreationPer1M
-    ? (record.cacheCreationTokens / 1_000_000) * pricing.cacheCreationPer1M
+    ? tieredCost(record.cacheCreationTokens, pricing.cacheCreationPer1M, threshold, pricing.cacheCreationPer1MAboveTier)
     : 0;
 
   return inputCost + outputCost + cachedCost + cacheCreationCost;

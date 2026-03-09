@@ -95,7 +95,6 @@ export class CodexProvider extends BaseProvider {
     const home = homedir();
     this.basePaths = basePaths ?? [
       join(home, '.codex', 'sessions'),
-      join(home, '.codex', 'archived_sessions'),
     ];
   }
 
