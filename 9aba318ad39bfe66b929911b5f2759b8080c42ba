@@ -1,0 +1,35 @@
+src/pricing/calculator.ts
+  81d3630723bd74b2 4,6,8-10,18,20-22,24
+tests/integration/codex-ccusage.test.ts
+  81d3630723bd74b2 1-119
+package.json
+  81d3630723bd74b2 15
+src/cli/commands/monthly.ts
+  81d3630723bd74b2 20
+src/pricing/models.ts
+  81d3630723bd74b2 6-11,21-25,32-36,43-47,54-58,71-75,87-89,94,116-119,121-135,137-139,141-158,169-172,175-177,194-196,201
+src/cli/commands/daily.ts
+  81d3630723bd74b2 20
+src/core/date-utils.ts
+  81d3630723bd74b2 26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "9aba318ad39bfe66b929911b5f2759b8080c42ba",
+  "prompts": {
+    "81d3630723bd74b2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "29e8f28b-1bcd-4de6-afe7-004912977cc3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "dhtmdgkr123 <osh12201@gmail.com>",
+      "messages": [],
+      "total_additions": 243,
+      "total_deletions": 57,
+      "accepted_lines": 232,
+      "overriden_lines": 0
+    }
+  }
+}
