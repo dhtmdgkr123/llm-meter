@@ -1,0 +1,48 @@
+src/pricing/models.ts
+  81d3630723bd74b2 6-11,21-25,32-36,43-47,54-58,71-75,87-89,94,116-119,121-135,137-139,141-158,169-172,175-177,194-196,201
+package.json
+  81d3630723bd74b2 15
+src/core/date-utils.ts
+  81d3630723bd74b2 26
+src/pricing/calculator.ts
+  81d3630723bd74b2 4,6,8-10,18,20-22,24
+src/cli/commands/daily.ts
+  81d3630723bd74b2 20
+tests/integration/codex-ccusage.test.ts
+  81d3630723bd74b2 1-119
+src/cli/commands/monthly.ts
+  81d3630723bd74b2 20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "a1a42717b5d6325d9d1213f565e5b1aba8fd90e6",
+  "prompts": {
+    "2cc00344fc5330e9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a0e4eb67-e4c1-4f69-adc3-4e2dc9d37d16",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "dhtmdgkr123 <osh12201@gmail.com>",
+      "messages": [],
+      "total_additions": 38,
+      "total_deletions": 0,
+      "accepted_lines": 38,
+      "overriden_lines": 0
+    },
+    "81d3630723bd74b2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "29e8f28b-1bcd-4de6-afe7-004912977cc3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "dhtmdgkr123 <osh12201@gmail.com>",
+      "messages": [],
+      "total_additions": 10,
+      "total_deletions": 40,
+      "accepted_lines": 10,
+      "overriden_lines": 0
+    }
+  }
+}
