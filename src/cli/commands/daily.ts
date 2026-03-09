@@ -17,6 +17,7 @@ export const dailyCommand = new Command('daily')
   .action(async (opts: CliOptions) => {
     const from = opts.from ? parseDate(opts.from) : getDefaultFromDate();
     const to = opts.to ? parseDate(opts.to) : getDefaultToDate();
+    to.setHours(23, 59, 59, 999);
     const providerFilter = opts.provider as ProviderId | undefined;
 
     const records = await collectAllRecords(from, to, providerFilter);

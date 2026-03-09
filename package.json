@@ -12,7 +12,7 @@
     "start": "bun run src/index.ts",
     "build": "bun build src/index.ts --outdir dist --target node --format esm && printf '#!/usr/bin/env node\n' | cat - dist/index.js > dist/tmp && mv dist/tmp dist/index.js && chmod +x dist/index.js",
     "prepublishOnly": "bun run build",
-    "test": "bun test"
+    "test": "TZ=Asia/Seoul bun test"
   },
   "devDependencies": {
     "@types/bun": "latest"

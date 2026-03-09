@@ -23,11 +23,7 @@ export function formatMonthKey(date: Date): string {
 
 export function isInRange(date: Date, from?: Date, to?: Date): boolean {
   if (from && date < from) return false;
-  if (to) {
-    const endOfDay = new Date(to);
-    endOfDay.setHours(23, 59, 59, 999);
-    if (date > endOfDay) return false;
-  }
+  if (to && date > to) return false;
   return true;
 }
 
