@@ -1,0 +1,21 @@
+src/pricing/models.ts
+  81d3630723bd74b2 6-11,21-25,32-36,43-47,54-58,71-75,87-89,94,116-119,121-135,137-139,141-158,169-172,175-177,194-196,201
+tests/integration/codex-ccusage.test.ts
+  81d3630723bd74b2 1-119
+src/cli/commands/daily.ts
+  81d3630723bd74b2 20
+package.json
+  81d3630723bd74b2 15
+src/cli/commands/monthly.ts
+  81d3630723bd74b2 20
+src/core/date-utils.ts
+  81d3630723bd74b2 26
+src/pricing/calculator.ts
+  81d3630723bd74b2 4,6,8-10,18,20-22,24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "56e052c2fb7bf2d744cd0897f4d9e655bdb9c2ed",
+  "prompts": {}
+}
